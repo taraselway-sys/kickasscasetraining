@@ -672,6 +672,21 @@ h2.famh2{margin:26px 0 6px;color:var(--navy)}
 .limlaw{margin-top:12px;font-size:14.5px;line-height:1.5}
 .limlaw p{margin:0 0 7px}
 .limlaw .limnote{background:#fbf6e6;border:1px solid #ecdcae;border-radius:10px;padding:9px 12px}
+/* the court's complete packet */
+.card.fampack{background:#fbf6e6;border:2px solid var(--gold,#f2b705);border-radius:14px}
+.fampack .fpk{display:inline-block;background:var(--navy,#16304f);color:#fff;font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:4px 9px;border-radius:6px;margin-bottom:8px}
+.fampack h3{margin:0 0 8px;font-size:19px;color:var(--navy,#16304f)}
+.fampack p{margin:0 0 10px;font-size:14.5px;line-height:1.5}
+.fpbtns{display:flex;flex-direction:column;gap:8px}
+a.fpbtn{display:flex;align-items:center;gap:10px;padding:13px 15px;border-radius:11px;background:#fff;border:1px solid #ecdcae;color:var(--navy,#16304f);font-weight:700;font-size:15.5px;text-decoration:none}
+a.fpbtn .fpi{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:#efe3bd;flex:0 0 auto}
+a.fpbtn .fpt{display:flex;flex-direction:column;line-height:1.25}
+a.fpbtn small{font-weight:600;color:var(--mut,#5f6b7a);font-size:12px;margin-top:2px}
+a.fpbtn.on{background:var(--navy,#16304f);border-color:var(--navy,#16304f);color:#fff;font-size:17px;padding:15px 16px}
+a.fpbtn.on .fpi{background:var(--gold,#f2b705);color:var(--navy,#16304f)}
+a.fpbtn.on small{color:#d7e0ea}
+.fpremind{margin:14px 0 6px;padding:10px 12px;border-left:4px solid var(--gold,#f2b705);background:#fbf6e6;border-radius:8px}
+.scopestate{margin:10px 0 0;font-size:14.5px;line-height:1.5;background:#fbf6e6;border:1px solid #ecdcae;border-left:4px solid var(--gold,#f2b705);border-radius:11px;padding:11px 14px}
 
 </style></head>
 <body>
@@ -2109,7 +2124,7 @@ function printComplaintForm(){
     try{ buildComplaint(); }catch(e){}
   }
 }
-function _printComplaintForm(ret){
+function _printComplaintForm(asHtml){
   // read what is on screen right now, not what was last saved
   var f={}, ids=['cp-name','cp-addr','cp-phone','cp-email','cp-resp','cp-respaddr','cp-respphone',
     'cp-area','cp-grounds','cp-first','cp-last','cp-facts','cp-want'];
@@ -2119,7 +2134,7 @@ function _printComplaintForm(ret){
   }
   D.complaint=f; try{ save(); }catch(e){}
   if(!f['cp-name'] && !f['cp-resp'] && !f['cp-grounds'] && !D.events.length){
-    if(!ret){ alert('Fill in at least your name or the respondent first, then try again.'); return; } }
+    if(!asHtml){ alert('Fill in at least your name or the respondent first, then try again.'); return; } }
   // build the plain text first, so there is always a readable version on the page
   try{ buildComplaint(); }catch(e){}
   var picked=(f['cp-grounds']||'').toLowerCase();
@@ -2199,7 +2214,7 @@ function _printComplaintForm(ret){
    '<div class="hsig"><span>Signature: <span class="hline"></span></span><span>Date: <span class="hline short"></span></span></div>'+
    '</div><div class="hrev">Revised 8/2020</div>'+
   '</div>';
-  if(ret) return html;
+  if(asHtml) return html;
   $('cp-print').innerHTML=
     '<div class="pvbar noprint">'+
       '<button class="pri" onclick="reprint(\'cp-print\')">Print again</button>'+
@@ -3711,7 +3726,7 @@ function buildHome(){
       '<button type="button" class="scopecard" onclick="show(\'court\')"><span class="ticon">▧</span><b>Go to court</b><span>Public records, open meetings, wrongful discharge and small claims.</span></button>'+
       '<button type="button" class="scopecard" onclick="show(\'parenting\')"><span class="ticon">♡</span><b>Family court</b><span>A parenting plan and a divorce decree, following Montana’s official court forms.</span></button>'+
       '<button type="button" class="scopecard" onclick="show(\'complaint\')"><span class="ticon">☑</span><b>File with the Human Rights Bureau</b><span>A discrimination complaint, from intake to mediation.</span></button>'+
-    '</div></div>'+
+    '</div><p class="scopestate"><b>Montana state cases only.</b> Everything here is for Montana state courts and state agencies, such as district court, justice court and the Human Rights Bureau. It does not prepare filings for federal court.</p></div>'+
     '<div class="dsec"><div class="dhead"><h3>Your case at a glance</h3></div><div id="glance-list"></div></div>'+
     '<div id="homedates-list"></div>'+
     '<div class="dsec"><div class="dhead"><h3>Your tools</h3></div><div id="tools-list"></div></div>'+
@@ -4403,6 +4418,31 @@ function famWho(p,v){ return v==='1'||v==='2'? famL(p,v) : v==='B'? 'Both parent
 function fb(v){ v=String(v==null?'':v).trim(); return v||'__________'; }   // a blank line on the form
 function fbs(v){ return String(v==null?'':v).trim().replace(/\s*\n\s*/g,' ').replace(/[.\s]+$/,''); }
 
+
+/* the court's complete packet: print all of it, not only the form this page fills in */
+var FAM_PACKS={
+  pp:[['Parenting plan packet','https://courts.mt.gov/forms/ParentPlan/parentingplan-packet.pdf','']],
+  dd:[['Divorce with children','https://courts.mt.gov/external/forms/dissolution/dissolution-child-packet.pdf','sep-yes'],
+      ['Divorce without children','https://courts.mt.gov/external/forms/dissolution/disnokids-packet.pdf','sep-no'],
+      ['Joint divorce with children','https://courts.mt.gov/forms/Dissolution-docs/Joint-Dissolution-of-Marriage-With-Children-8.21.20261.pdf','joint-yes'],
+      ['Joint divorce without children','https://courts.mt.gov/forms/Dissolution-docs/Joint-Dissolution-of-Marriage-Without-Children-8.21.20261.pdf','joint-no']]
+};
+function famPacket(kind){
+  var s=fs(kind), mine=(s.filing||'sep')+'-'+(s.kids||'');
+  var list=FAM_PACKS[kind];
+  return '<div class="card fampack"><div class="fpk">Start here</div><h3>Print the court\u2019s complete packet first</h3>'+
+    '<p><b>You will need the whole packet, not only the form this page fills in.</b> '+(kind==='pp'?
+      'A parenting case also needs the petition, the summons, proof of service, child support financial affidavits and the other forms in the packet.':
+      'A divorce also needs the petition, the summons, proof of service, financial disclosures and the other forms in the packet.')+
+    ' Print it before you start, read the instructions in it, and fill in every form it lists.</p>'+
+    '<div class="fpbtns">'+list.map(function(x){ var on=!x[2]||x[2]===mine;
+      return '<a class="fpbtn'+(on?' on':'')+'" href="'+x[1]+'" target="_blank" rel="noopener"><span class="fpi">\u2193</span><span class="fpt">'+esc(x[0])+'<small>'+(list.length>1&&on&&x[2]?'Your case \u00b7 ':'')+'Complete packet \u00b7 PDF</small></span></a>'; }).join('')+'</div>'+
+    (kind==='dd'?'<p class="note" style="margin:8px 0 0">Not sure which one? Answer the two questions below and your packet is marked.</p>':'')+'</div>';
+}
+function famPacketReminder(kind){
+  return '<div class="note fpremind">This is one form from the court\u2019s packet. File it with the rest of the packet. <a href="'+(kind==='pp'?FAM_PACKS.pp[0][1]:'https://courts.mt.gov/forms/dissolution/kid')+'" target="_blank" rel="noopener">'+(kind==='pp'?'Get the complete packet':'See all the divorce packets')+'</a>.</div>';
+}
+
 /* ---------- inputs ---------- */
 function famId(p,k){ return 'fm-'+p+'-'+k; }
 function fT(p,k,label,ph){ var id=famId(p,k); return '<label class="fl" for="'+id+'">'+label+'</label><input type="text" id="'+id+'" value="'+esc(famV(p,k))+'" placeholder="'+esc(ph||'')+'" oninput="fSet(\''+p+'\',\''+k+'\',this.value)">'; }
@@ -4536,7 +4576,7 @@ function renderParenting(){
   if(!s.myname && c['cp-name']) s.myname=c['cp-name'];
   if(!s.filing) s.filing='sep'; if(!s.me) s.me='1';
   var L1=famL(P,'1'), L2=famL(P,'2');
-  var h=famWarn('pp');
+  var h=famPacket('pp')+famWarn('pp');
   h+=famForms('pp','This page follows the court’s Proposed Parenting Plan, form MP-300, section by section, in the same order and with the same choices. Use it to fill in the official form, or print the draft and compare it line by line. The complete packet has every form you need to start a parenting case, and instructions.');
   h+=famBefore([
     ['Who can file','Either parent, or both together. Montana can usually decide only if Montana is the children’s home state: they lived here for the 6 months before the case was filed, or since birth if they are younger. Section 40-7-201, MCA.'],
@@ -4665,7 +4705,7 @@ function renderParenting(){
   h+=famCard('18. Other Provisions',fA(P,'other18','Anything else','Neither parent will discuss this case with the children.'));
   h+=famCard('19. Request for Parenting Plan be Ordered by the Court',fS(P,'req','Who asks the Court to adopt this plan',famParties(P,[['B','Both']]))+
     fNote('Your plan ends with the form’s warning about contempt, both parents’ signature lines under penalty of perjury, and the Order by the Court for the judge.'));
-  h+=famOutput('pp','parenting plan');
+  h+=famPacketReminder('pp')+famOutput('pp','parenting plan');
   box.innerHTML=h; famCourtName(P);
 }
 
@@ -4829,7 +4869,7 @@ function renderDecree(){
   if(!s.myname && c['cp-name']) s.myname=c['cp-name'];
   if(!s.filing) s.filing='sep'; if(!s.me) s.me='1';
   var kids=s.kids==='yes', joint=s.filing==='joint', L1=famL(P,'1'), L2=famL(P,'2');
-  var h=famWarn('dd');
+  var h=famPacket('dd')+famWarn('dd');
   h+=famForms('dd','This page follows the court’s decree forms in the same order and with the same choices: MP-703 when you have minor children together, and MP-713 when you do not. The Property Distribution at the bottom follows form MP-500, sections 1 to 10. If you file together, the joint packets use MP-721 or MP-722, which cover the same findings. The complete packets list every form you need, in order, with instructions.');
   h+=famBefore([
     ['Who can file','One spouse must have lived in Montana, or been stationed here in the military, for 90 days before filing. Section 40-4-104, MCA.'],
@@ -4902,7 +4942,7 @@ function renderDecree(){
   if(s.maint==='pay') dc+=fSub(fPS(P,'mPayer','Who pays')+fT(P,'mAmt','Amount per month','$')+(kids?'':fD(P,'mStart','Starting date'))+fD(P,'mEnd','Date of last payment')+fT(P,'mDay','Day of each month it is paid','1st'));
   dc+=fA(P,'otherDec','Other provisions (optional)');
   h+=famCard('Decree of dissolution of marriage',dc);
-  h+=famOutput('dd','decree');
+  h+=famPacketReminder('dd')+famOutput('dd','decree');
 
   // ---------- property distribution, MP-500 ----------
   var PD='pd', pty='party';
@@ -4941,7 +4981,7 @@ function renderDecree(){
   g+=famCard('8. Disclosure of Debts',s8);
   g+=famCard('9. Additional Assets or Debts',fR(PD,'more','Choose one',[['all','All of our assets and debts are listed on this form'],['more','More are listed on attached pages, or on forms MP-500-A to MP-500-D']]));
   g+=famCard('10. Other',fA(PD,'other10','Anything else (optional)'));
-  g+=famOutput('pd','property distribution');
+  g+=famPacketReminder('dd')+famOutput('pd','property distribution');
   box.innerHTML=h+g; famCourtName(P);
 }
 var PD_DEBT=[['home','Home / real property loan'],['veh','Vehicle loan'],['util','Past due utility bill'],['card','Credit card'],['student','Student loan'],['med','Past due medical bill'],['other','Other liability']];
@@ -5126,15 +5166,15 @@ function initFamily(){
 // [key, group, name, amount, unit ('d','y'), date label, law, what starts the clock, where to file, what to know, counting ('stat','rule'), extra]
 var LIM=[
  ['hrb','Discrimination','Montana Human Rights Bureau complaint',180,'d','The most recent act, or the day you discovered it','§ 49-2-501(4), MCA','The discriminatory act, or the day you discovered it.','Montana Human Rights Bureau (Department of Labor & Industry).','If you filed a grievance under a union contract or written policy, the 180 days can run from when it ends. If it is not over in 120 days, the limit becomes 300 days from the act.','stat'],
- ['eeoc','Discrimination','Federal EEOC charge (Title VII, ADA, age)',300,'d','The most recent discriminatory act','42 U.S.C. § 2000e-5(e)(1)','The discriminatory act.','EEOC, or the Montana Human Rights Bureau, which cross-files with the EEOC.','Montana has its own human rights agency, so you get 300 days instead of 180. Filing with the Bureau within its 180 days protects both.','rule'],
- ['hud','Discrimination','Federal fair housing complaint (HUD)',1,'y','The day the housing practice happened or ended','42 U.S.C. § 3610(a)(1)','The discriminatory housing practice, or the day it ended.','U.S. Department of Housing and Urban Development.','A Montana Human Rights Bureau housing complaint still has its own 180-day limit.','rule'],
+ ['eeoc','Federal deadlines (for reference only)','Federal EEOC charge (Title VII, ADA, age)',300,'d','The most recent discriminatory act','42 U.S.C. § 2000e-5(e)(1)','The discriminatory act.','EEOC, or the Montana Human Rights Bureau, which cross-files with the EEOC.','Montana has its own human rights agency, so you get 300 days instead of 180. Filing with the Bureau within its 180 days protects both.','rule'],
+ ['hud','Federal deadlines (for reference only)','Federal fair housing complaint (HUD)',1,'y','The day the housing practice happened or ended','42 U.S.C. § 3610(a)(1)','The discriminatory housing practice, or the day it ended.','U.S. Department of Housing and Urban Development.','A Montana Human Rights Bureau housing complaint still has its own 180-day limit.','rule'],
  ['hrbobj','Discrimination','Objection to the Human Rights Commission after a Bureau dismissal',14,'d','The date of the Bureau’s notice of dismissal','§ 49-2-511, MCA','The notice of dismissal after the investigation.','Montana Human Rights Commission.','You can object to the Commission, or go to district court instead. Read your dismissal notice for the exact choices.','stat'],
  ['hrb511','Discrimination','District court suit after the Bureau dismisses your case',90,'d','The date of the final agency decision (the dismissal, or the Commission’s order)','§ 49-2-511, MCA','The final agency decision: the dismissal, or the Commission’s order affirming it.','Montana district court.','Miss this and the claim is barred. A petition for judicial review of a Commission order is due in 30 days instead.','stat'],
  ['hrb512','Discrimination','District court suit after a 12-month dismissal (no hearing yet)',90,'d','The date of the notice of dismissal','§ 49-2-512(3), MCA','The notice of dismissal issued when the case was not heard within 12 months.','Montana district court.','Miss this and the claim is barred.','stat'],
- ['rts','Discrimination','Federal lawsuit after an EEOC right-to-sue letter',90,'d','The day you received the right-to-sue letter','42 U.S.C. § 2000e-5(f)(1)','Receiving the EEOC’s notice of right to sue.','U.S. District Court for the District of Montana.','Write down the day the letter arrived. Courts often assume it arrived a few days after it was mailed.','rule'],
+ ['rts','Federal deadlines (for reference only)','Federal lawsuit after an EEOC right-to-sue letter',90,'d','The day you received the right-to-sue letter','42 U.S.C. § 2000e-5(f)(1)','Receiving the EEOC’s notice of right to sue.','U.S. District Court for the District of Montana.','Write down the day the letter arrived. Courts often assume it arrived a few days after it was mailed.','rule'],
  ['wdea','Employment','Wrongful discharge (Montana Wrongful Discharge Act)',1,'y','The date you were fired','§ 39-2-911, MCA','The date of discharge.','Montana district court.','You must first use your employer’s written internal appeal, if they told you about it within 14 days. The deadline pauses while the appeal runs, for no more than 120 days. Serve the complaint within 6 months of filing.','stat'],
  ['wage','Employment','Unpaid wage claim',180,'d','The day the wages were due and not paid','§ 39-3-207, MCA','The default or delay in paying wages.','Montana Department of Labor & Industry, Wage and Hour Unit.','You can recover wages for the 2 years before you file, or 3 years for repeated violations.','stat'],
- ['epa','Employment','Federal Equal Pay Act lawsuit',2,'y','The date of the unequal paycheck','29 U.S.C. § 255(a)','Each unequal paycheck.','U.S. District Court for the District of Montana.','It is 3 years if the violation was willful. No EEOC charge is needed first.','rule','willful'],
+ ['epa','Federal deadlines (for reference only)','Federal Equal Pay Act lawsuit',2,'y','The date of the unequal paycheck','29 U.S.C. § 255(a)','Each unequal paycheck.','U.S. District Court for the District of Montana.','It is 3 years if the violation was willful. No EEOC charge is needed first.','rule','willful'],
  ['openmtg','Government','Open meeting violation: ask the court to void a decision',30,'d','The day you learned, or should have learned, of the decision','§ 2-3-213, MCA','The day you learned, or reasonably should have learned, of the decision.','Montana district court.','This is one of the shortest deadlines in Montana law. File as soon as you can.','stat'],
  ['records','Government','Public records denial',0,'none','The date of the denial','§ 2-6-1009, MCA','The denial of your request.','Montana district court.','The law sets no specific deadline to sue over a denied records request. Do not wait. Delay makes the records harder to get and the case harder to win.','stat'],
  ['mapa','Government','Court review of a state agency’s final decision',30,'d','The day the final written decision was served on you','§ 2-4-702, MCA','Service of the agency’s final written decision, or the decision on rehearing if you asked for one.','District court in the county where you live, or where the agency’s main office is.','Read the decision. Some agencies have their own appeal steps first.','stat'],
@@ -5147,7 +5187,7 @@ var LIM=[
  ['prop','Civil claims','Damage to or taking of property',2,'y','The date of the damage or taking','§ 27-2-207, MCA','The damage or taking.','Justice court or small claims ($7,000 or less), or district court.','','stat'],
  ['fraud','Civil claims','Fraud or mistake',2,'y','The day you discovered the fraud','§ 27-2-203, MCA','Discovery of the facts that make up the fraud or mistake.','District court, or justice court for $7,000 or less.','','stat'],
  ['statute','Civil claims','A liability created by a statute',2,'y','The date of the violation','§ 27-2-211(1)(c), MCA','The violation.','The court named in that statute, or district court.','','stat'],
- ['s1983','Civil claims','Federal civil rights lawsuit (42 U.S.C. § 1983)',3,'y','The date of the violation','§ 27-2-204(1), MCA (borrowed by federal law)','The day you knew, or should have known, of the injury.','U.S. District Court for the District of Montana.','Federal courts borrow Montana’s 3-year personal injury limit for these cases.','stat'],
+ ['s1983','Federal deadlines (for reference only)','Federal civil rights lawsuit (42 U.S.C. § 1983)',3,'y','The date of the violation','§ 27-2-204(1), MCA (borrowed by federal law)','The day you knew, or should have known, of the injury.','U.S. District Court for the District of Montana.','Federal courts borrow Montana’s 3-year personal injury limit for these cases.','stat'],
  ['ans','Court deadlines','Answer a district court complaint',21,'d','The day you were served','M.R.Civ.P. 12(a)','Being served with the summons and complaint.','The district court where the case was filed.','The State and its agencies get 42 days. If you miss it, the other side can ask for a default judgment.','rule'],
  ['ansj','Court deadlines','Answer a justice court complaint',20,'d','The day you were served','§ 25-31-406, MCA','Being served with the summons and complaint.','The justice court where the case was filed.','Eviction cases are much shorter. Follow the date on your summons.','stat'],
  ['appeal','Court deadlines','Appeal to the Montana Supreme Court',30,'d','The day the judgment was entered (or notice of entry was served)','M.R.App.P. 4(5)(a)','Entry of the judgment, or service of the notice of entry when one is required.','Clerk of the Montana Supreme Court.','It is 60 days when the State, a city, a county or another public body is a party.','rule','gov'],
@@ -5193,7 +5233,7 @@ function limAmount(L,amt){ return amt+' '+(L[4]==='y'?(amt===1?'year':'years'):(
 
 function initLimits(){
   var card=$('dl-date')&&$('dl-date').closest('.card'); if(!card) return;
-  var groups=[], gm={}; LIM.forEach(function(L){ if(!gm[L[1]]){ gm[L[1]]=[]; groups.push(L[1]); } gm[L[1]].push(L); });
+  var groups=[], gm={}; var FED='Federal deadlines (for reference only)'; LIM.forEach(function(L){ if(!gm[L[1]]){ gm[L[1]]=[]; if(L[1]!==FED) groups.push(L[1]); } gm[L[1]].push(L); }); groups.push(FED);
   var sel='<label class="fl" for="dl-type">Type of case</label><select id="dl-type" onchange="limType()">'+groups.map(function(g){
     return '<optgroup label="'+esc(g)+'">'+gm[g].map(function(L){ return '<option value="'+L[0]+'">'+esc(L[2])+'</option>'; }).join('')+'</optgroup>'; }).join('')+'</select>'+
     '<div id="dl-opts"></div>';
@@ -5230,7 +5270,7 @@ window.calcDeadline=function(quiet){
   s.dates=s.dates||{};
   if(k==='hrb') s.last=v; else if(v) s.dates[k]=v; else delete s.dates[k];
   if($('dl-willful')) s.willful=$('dl-willful').checked; if($('dl-gov')) s.gov=$('dl-gov').checked;
-  var law='<p><b>The law:</b> '+esc(L[6])+'</p>'+(L[7]?'<p><b>The clock starts:</b> '+esc(L[7])+'</p>':'')+'<p><b>Where to file:</b> '+esc(L[8])+'</p>'+(L[9]?'<p><b>Know this:</b> '+esc(L[9])+'</p>':'');
+  var law=(L[1].indexOf('Federal')===0?'<p class="limnote">This is a federal deadline, shown for reference. This app prepares Montana state filings only. If you may have a federal claim, talk to a lawyer.</p>':'')+'<p><b>The law:</b> '+esc(L[6])+'</p>'+(L[7]?'<p><b>The clock starts:</b> '+esc(L[7])+'</p>':'')+'<p><b>Where to file:</b> '+esc(L[8])+'</p>'+(L[9]?'<p><b>Know this:</b> '+esc(L[9])+'</p>':'');
   if(L[4]==='none'){ box.className='big'; box.innerHTML='<b>No deadline</b><span>'+esc(L[2])+' has no filing deadline in Montana law.</span>'; $('dl-law').innerHTML=law; if(!quiet) save(); return; }
   if(!v){ box.className='big'; box.innerHTML='<b>&mdash;</b><span>Enter the date to see your deadline</span>'; $('dl-law').innerHTML=law; if(!quiet) save(); return; }
   var r=limCompute(L,v,{willful:s.willful,gov:s.gov}), left=daysBetween(todayISO(),r.due);
