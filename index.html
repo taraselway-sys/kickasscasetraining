@@ -363,42 +363,52 @@ body.printframe .printframe-body{max-width:none}
 @media(min-width:700px){main{padding:24px}header h1{font-size:25px}header .punch{font-size:13.5px}.band .tagline{font-size:17px}.band{padding:14px 24px}header .byline{font-size:12px}}
 
 /* ---- the charge form, laid out like the Bureau's own ---- */
-.hrbform{font-family:'Times New Roman',Times,'Liberation Serif',serif;color:#000;background:#fff;font-size:11pt;line-height:1.3;max-width:7.3in;margin:0 auto}
+.hrbform{font-family:'Times New Roman',Times,'Liberation Serif',serif;color:#000;background:#fff;font-size:11pt;line-height:1.3;max-width:7.5in;margin:0 auto}
 .hrbform table.hgrid{width:100%;border-collapse:collapse;table-layout:fixed}
 .hrbform .hgrid td{border:1px solid #000;vertical-align:top;padding:4pt 6pt 6pt}
-.hrbform .hgrid td.hc1{width:45%}
-.hrbform .hgrid td.hc2{width:55%}
+.hrbform .hgrid td.hc1{width:44%}
+.hrbform .hgrid td.hc2{width:56%}
 .hrbform .hbasis{margin-top:-1px}
-.hrbform .hbasis td.hb1{width:70%}
-.hrbform .hbasis td.hb2{width:30%}
-.hrbform .htitle{font-size:14pt;letter-spacing:.01em;padding:8pt 8pt 22pt !important}
+.hrbform .hbasis td.hb1{width:68%}
+.hrbform .hbasis td.hb2{width:32%;padding:0}
+.hrbform .hbasis td.hb2>.hlab{padding:4pt 6pt 0}
+.hrbform .hdate{padding:5pt 6pt 6pt;font-size:11pt}
+.hrbform .hdate.hlatest{border-top:1px solid #000}
+.hrbform .htitle{font-size:14pt;letter-spacing:.01em;padding:8pt 8pt 22pt !important;white-space:nowrap}
 .hrbform .hnum{font-weight:700;font-size:10.5pt;text-align:right;margin-bottom:8pt}
 .hrbform .hfiled{text-align:center;font-size:10.5pt;padding:4pt 6pt !important}
-.hrbform .hlab{font-size:10.5pt;margin-bottom:4pt}
+.hrbform .hlab{font-size:10.5pt;margin-bottom:4pt;white-space:nowrap}
 .hrbform .hval{font-size:11pt;line-height:1.3;word-break:break-word}
 .hrbform .hchk{margin:2pt 0}
 .hrbform .hbx{font-size:12pt;margin-right:6pt}
 .hrbform .hsec{font-size:11pt;margin-top:10pt;padding-bottom:2pt}
-.hrbform .hver{border-top:1px solid #000;padding-top:4pt;margin-top:12pt;padding-left:6pt}
 .hrbform .hintro{margin:4pt 0 6pt;font-size:11pt;line-height:1.35;text-align:left}
 .hrbform ol.hp{list-style:none;margin:0 0 6pt;padding:0 0 0 .35in}
-.hrbform ol.hp li{display:flex;gap:0;margin:0 0 4pt;line-height:1.35}
+.hrbform ol.hp li{display:flex;gap:0;margin:0 0 4pt;line-height:1.35;break-inside:avoid;page-break-inside:avoid}
 .hrbform ol.hp .hl{flex:0 0 .3in}
 .hrbform ol.hp .ht{flex:1;min-width:0}
 .hrbform ul.hvl{margin:4pt 0 6pt;padding-left:.45in}
 .hrbform ul.hvl li{margin:0 0 2pt;font-size:10.5pt;line-height:1.3}
-.hrbform .hbody{border-left:1px solid #000;border-bottom:1px solid #000;margin-top:-1px;padding:0 0 0 0}
-.hrbform .hbody>.hsec,.hrbform .hbody>.hintro,.hrbform .hbody>ol.hp,.hrbform .hbody>.hsig{padding-left:6pt;padding-right:6pt}
+/* the particulars box: left and bottom rules like the Bureau's form. If it runs onto a second page,
+   each page's part gets its own closing rule, so page 1 ends with a line and page 2 starts with one. */
+.hrbform .hbody{border-left:1px solid #000;border-top:1px solid #000;border-bottom:1px solid #000;margin-top:-1px;padding:0;
+  -webkit-box-decoration-break:clone;box-decoration-break:clone}
+.hrbform .hbody>.hsec,.hrbform .hbody>.hintro,.hrbform .hbody>ol.hp{padding-left:6pt;padding-right:6pt}
 .hrbform .hbody>.hsec{margin-top:0;padding-top:6pt}
-.hrbform .hbody>.hver{padding-top:4pt;margin-top:8pt}
+.hrbform .hverwrap{border-top:1px solid #000;margin-top:8pt;break-inside:avoid;page-break-inside:avoid}
+.hrbform .hver{padding:4pt 6pt 0;margin-top:0}
 .hrbform .hrev{font-size:8pt;font-weight:700;margin-top:3pt}
-.hrbform .hsig{display:flex;gap:.4in;padding:10pt 6pt 6pt;font-size:11pt;margin-top:2pt}
+.hrbform .hsig{display:flex;gap:.4in;padding:12pt 6pt 6pt;font-size:11pt;margin-top:2pt}
 .hrbform .hsig>span{display:flex;align-items:flex-end;gap:4pt;flex:1}
 .hrbform .hsig>span:last-child{flex:0 0 2.3in}
 .hrbform .hline{flex:1;border-bottom:1px solid #000;height:12pt}
 .hrbform .hblank{color:#888;font-style:italic}
-@media print{.hrbform{max-width:none}.hrbform .hblank{color:#555}}
-@media(max-width:620px){.hrbform .hbasis td.hb1{width:58%}.hrbform .hbasis td.hb2{width:42%}.hrbform .hlab{word-break:normal;hyphens:none}.hrbform{font-size:9.5pt}.hrbform .hval,.hrbform .hintro{font-size:9.5pt}.hrbform .hlab,.hrbform .hfiled,.hrbform .hnum{font-size:8.5pt}.hrbform .htitle{font-size:11pt}}
+@media print{
+  .hrbform{max-width:none;page:hrbform}.hrbform .hblank{color:#555}
+  /* the Bureau's form runs nearly edge to edge: half-inch margins, no page number */
+  @page hrbform{size:letter;margin:.5in;@bottom-center{content:none}}
+}
+@media screen and (max-width:620px){.hrbform .hbasis td.hb1{width:58%}.hrbform .hbasis td.hb2{width:42%}.hrbform .hlab,.hrbform .htitle{white-space:normal;word-break:normal;overflow-wrap:normal;hyphens:none}.hrbform .hsec{font-size:9.5pt}.hrbform{font-size:9.5pt}.hrbform .hval,.hrbform .hintro,.hrbform .hdate{font-size:9.5pt}.hrbform .hlab,.hrbform .hfiled,.hrbform .hnum{font-size:8.5pt}.hrbform .htitle{font-size:10pt;padding:6pt 6pt 14pt !important}}
 
 .readpage .rp summary:before,.readpage .rp summary:after{display:none !important;content:none !important}
 
@@ -515,16 +525,49 @@ button.cwclaim.on{border-color:var(--navy);background:var(--tint);box-shadow:ins
 .rbmiss{margin-top:12px}
 
 /* ===== case packet ===== */
+.packet{font-family:'Times New Roman',Times,'Liberation Serif',serif;color:#111}
 .packet .pkcover{padding:30px 0 10px}
-.packet .pkcover h1{font-size:30px;margin:0 0 18px}
-.packet .pkline{font-size:15px;margin:0 0 6px}
-.packet .pkcover ol{font-size:15px;line-height:1.8}
+.packet .pkcover h1{font-size:30px;margin:0 0 6px;letter-spacing:.01em;padding-bottom:10px;border-bottom:3px double #111}
+.packet table.pkparties{width:auto;border-collapse:collapse;margin:16px 0 26px}
+.packet table.pkparties th{text-align:left;font-weight:700;font-size:15px;letter-spacing:0;text-transform:none;color:#111;
+  padding:5px 18px 5px 0;border:0;vertical-align:top;white-space:nowrap}
+.packet table.pkparties td{font-size:15px;padding:5px 0;border:0;vertical-align:top}
+.packet .pkcover h3{font-size:16px;margin:0 0 8px;color:#111;text-transform:uppercase;letter-spacing:.08em}
+.packet ol.pktoc{font-size:15px;line-height:1.9;margin:0;padding-left:22px}
 .packet .pksec{margin-top:28px}
-.packet .pksec h2{font-size:19px;margin:0 0 12px;color:#111}
-.packet pre.pkpre{white-space:pre-wrap;font-family:Georgia,'Iowan Old Style',Palatino,serif;font-size:13.5px;line-height:1.55;margin:0}
+.packet .pksec h2{font-size:19px;margin:0 0 14px;color:#111;padding-bottom:6px;border-bottom:1.5px solid #111}
+.packet .pksec h2 .pknum{color:#555}
+.packet table{border-collapse:collapse;width:100%;table-layout:auto}
+.packet th{font-family:Arial,Helvetica,sans-serif;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:#444;
+  padding:0 7px 5px;border-bottom:1px solid #111;text-align:left;vertical-align:bottom}
+.packet td{padding:8px 7px;border-bottom:1px solid #ccc;vertical-align:top;font-size:14px;line-height:1.4}
+.packet td.n,.packet th:first-child{width:22px;padding-left:0;padding-right:4px}
+.packet td.n{color:#777;font-size:12px}
+.packet td.dcell{width:128px;font-size:13px;font-weight:700;color:#222;white-space:nowrap}
+.packet td.th{width:96px}.packet td.th img{max-width:84px;max-height:96px;border:1px solid #bbb;display:block}
+.packet td.loc{width:27%;font-size:12.5px;color:#444;overflow-wrap:anywhere}
+.packet .pk-chronology .wt{font-weight:400}
+.packet .pk-deadlines td.dcell{width:1%}
+.packet .wt{font-weight:700;margin:0 0 2px}
+.packet .dt{font-size:12px;color:#555;font-weight:700;margin-bottom:1px}
+.packet .pv{font-size:12.5px;color:#444;margin-top:3px}
+.packet pre.pkpre{white-space:pre-wrap;font-family:'Times New Roman',Times,serif;font-size:14px;line-height:1.55;margin:0}
+@media screen and (max-width:620px){
+  .packet td.dcell{white-space:normal;width:auto}
+}
 @media print{
-  .packet .pksec{page-break-before:always;margin-top:0}
-  .packet .pkcover{page-break-after:avoid}
+  .packet .pksec{page-break-before:always;break-before:page;margin-top:0}
+  .packet .pkcover{page-break-after:avoid;padding-top:0}
+  .packet .pksec h2{font-size:15pt}
+  .packet th{font-size:7.5pt}
+  .packet td{font-size:10.5pt;padding:6pt 5pt}
+  .packet td.dcell{font-size:10pt;width:1.15in}
+  .packet td.th{width:.95in}.packet td.th img{max-width:.85in;max-height:1.05in}
+  .packet td.loc{font-size:9pt}
+  .packet .pv,.packet .dt{font-size:9.5pt}
+  .packet td.n{font-size:9pt;width:.22in}
+  .packet thead{display:table-header-group}
+  .packet tr{break-inside:avoid;page-break-inside:avoid}
 }
 
 /* ===== home dashboard ===== */
@@ -792,7 +835,12 @@ button.dlink{padding:9px 10px;margin:0;font-size:13.5px;border-radius:9px}
 button.dlink:active{background:var(--tint)}
 #moresheet{max-height:86vh;overflow-y:auto}
 
-</style></head>
+/* temporary: formatting update notice */
+.updnote{background:#fff7e0;border:1px solid #f2b705;border-left:5px solid #f2b705;border-radius:10px;padding:10px 12px;margin:0 0 14px;font-size:14px;line-height:1.45;color:#3a2e00}
+@media print{.updnote{display:none !important}}
+
+</style><style>.updnote{display:none !important}</style>
+</head>
 <body>
 <div id="gate" style="position:fixed;inset:0;z-index:9999;background:#16304f;display:flex;align-items:center;justify-content:center;padding:16px;font-family:'Avenir Next',Avenir,'Segoe UI',system-ui,sans-serif">
 <form onsubmit="return kcGate(event)" style="background:#fff;border-radius:16px;padding:24px 22px;max-width:340px;width:100%;text-align:center">
@@ -1362,7 +1410,7 @@ so nothing will work until it runs.</div></noscript>
  <label class="fl" for="rq-out">Your request</label><textarea id="rq-out" style="min-height:300px"></textarea>
  <div class="row"><button class="pri" onclick="printRequest()">Print the letter</button> <button class="sec" onclick="copyOut('rq-out')">Copy</button></div></div>
  <div id="rq-print" class="printout" style="display:none"></div>
- <h3>Requests you have sent</h3><div id="rq-list"></div><details class="learn"><summary>Getting the records &mdash; from the guide</summary><div class="lb"><p><b>Almost everything I was able to prove came from records someone else created and had to hand over.</b> Not from my account of events. From their own documents, contradicting their own statements.</p><h4>Who is subject to a request</h4><p>In Montana the right to know is in the Constitution itself — Article II, Section 9 — not merely in statute. It reaches <b>public bodies and agencies of state and local government</b>.</p><p>That includes: cities and towns, counties, school districts, fire districts and other special districts, state agencies and departments, public universities, and the boards and committees of all of them.</p><p><b>It does not reach private employers.</b> If your employer is private, this route is closed — but your own personnel file may still be available under a different rule, and discovery in litigation reaches further than a records request ever will.</p><div class="gbox"><div class="gboxh">What people miss</div><p><b>Text messages on personal devices about public business are public records.</b> So are emails sent from a private account about government work. The test is the content, not the device.</p><p><b>Meeting recordings</b> are records. So are draft minutes, calendars, call logs, and the metadata on documents.</p><p><b>Ask for the search terms they used.</b> If a production comes back thin, asking what they searched and which accounts they searched is often more revealing than the production itself.</p></div><h4>How to make the request</h4><p class="gterm"><b>In writing, always</b> &mdash; email is fine. Keep the sent copy. The date you asked is as important as what you asked for.</p><p class="gterm"><b>Be specific about scope</b> &mdash; name the date range, the people whose records you want, and the accounts — official and personal — you believe hold responsive material.</p><p class="gterm"><b>Ask for categories, not conclusions</b> &mdash; “all communications between X and Y between these dates” works. “Anything showing they discriminated” does not.</p><p class="gterm"><b>Ask about fees up front</b> &mdash; Montana allows a charge for the actual cost of fulfilling a request. Ask for an estimate before they begin, and ask whether a waiver is available.</p><p class="gterm"><b>Follow up in writing when it is late</b> &mdash; and keep following up. A paper trail of unanswered requests is itself evidence.</p><p class="gterm"><b>Ask again, differently</b> &mdash; I obtained the two documents most central to my case only after a different body produced them from an account the first search had excluded.</p><h4>If they are a public body, the meeting rules are yours too</h4><p>Montana’s open meeting law is not just about watching. It gives you things you can use, and it is written to be <b>liberally construed in favor of openness</b>.</p><p class="gterm"><b>They cannot act on an item that is not on the published agenda</b> &mdash; § 2-3-103. A decision taken on something the public was never told would be discussed is vulnerable — and a district court can void a decision made in violation of the open meeting law.</p><p class="gterm"><b>You have a right to comment on matters <i>not</i> on the agenda</b> &mdash; the agenda must include an item allowing public comment on any public matter within the agency’s jurisdiction that is not otherwise listed. They do not get to keep your subject off the agenda and thereby keep you quiet.</p><p class="gterm"><b>What you say must go into the minutes</b> &mdash; § 2-3-103 requires public comment received at a meeting to be incorporated into the official minutes. If you speak, there is a permanent record of it — and if the minutes omit or distort what you said, that omission is itself documented.</p><p class="gterm"><b>Minutes must be kept and available</b> &mdash; for every meeting required to be open. Compare them against the recording.</p><div class="gbox green"><div class="gboxh">When they can close a meeting — and when they cannot</div><p><b>Individual privacy.</b> § 2-3-203(3). But <b>the right belongs to the person being discussed</b> — and if that person waives it, the meeting must be open. If they are closing a session to talk about you, you can waive and force it open.</p><p><b>Litigation strategy.</b> § 2-3-203(4). Only where an open meeting would have a detrimental effect on their litigating position — and <b>never</b> where the only parties to the litigation are public agencies.</p><p><b>The possibility of a closed session must appear on the agenda</b> so the public is notified in advance.</p><p><b>And the decision itself must be made in open session.</b> They may discuss strategy behind a closed door. They may not decide behind one.</p></div><p><span>Minutes of a properly closed session are sealed absent a court order — but minutes of that closed portion must still be kept. The absence of them is a fact.</span></p><p class="lawcite"><b>§ 2-3-103 — notice, agenda and public participation</b><br><span>archive.legmt.gov · title 0020, chapter 0030</span></p><p class="lawcite"><b>§ 2-3-203 — meetings to be open, and the exceptions</b><br><span>archive.legmt.gov · title 0020, chapter 0030</span></p><h4>What becomes public afterward</h4><p><b>A settlement paid by a public body is generally a public record.</b> Public money is public. So are the minutes approving it, and in many cases the agreement itself.</p><p>This cuts both ways and you should know it before you sign anything. A confidentiality term cannot un-public a public expenditure, and a term that purports to may not be enforceable against the record itself. Ask explicitly what the body will disclose if someone requests it.</p><p>It also means you can <b>look up what they paid to settle with other people</b>. Prior settlements, verdicts, and the budget lines they came out of are often discoverable before you ever walk into mediation.</p><h4>Your own records</h4><p>Separately from any public records request, <b>ask for your own file.</b> Personnel file, training records, disciplinary records, your application, anything with your name on it.</p><p>Ask in writing. Ask for the <b>complete</b> file, including anything held by a supervisor outside the official file. Ask for it in native format with metadata intact, not printed and rescanned.</p><div class="gbox"><div class="gboxh">Why your own file matters</div><p>My personnel file arrived 39 days late and contained a written warning <b>I had never seen or been told about.</b> It was dated, signed, and filed without my knowledge.</p><p>It also showed what was <i>not</i> there — no record of the training that had been halted, no record of a commitment that had been made to me in writing elsewhere. Absences in a file are evidence too.</p><p><b>Ask early.</b> If you wait until you are in a dispute, a litigation hold may be invoked to delay it.</p></div></div></details><div class="pagefoot"><button class="sec" onclick="printPage('records')">Print this page <span>&#8599;</span></button></div></section><section class="view" id="v-complaint"><h2>The complaint</h2><p class="sub2">The Bureau drafts one from your intake, or you may draft your own. Either way, this assembles it.</p><div class="toolhead" style="margin:4px 0 10px"><h3 style="margin:0 0 4px;font-size:18px;color:var(--navy)">Draft your complaint</h3><p class="note" style="margin:0">Fill in the boxes below, then print it on the Bureau&rsquo;s charge form. The guidance on whether you have a claim, and how to word it, follows.</p></div>
+ <h3>Requests you have sent</h3><div id="rq-list"></div><details class="learn"><summary>Getting the records &mdash; from the guide</summary><div class="lb"><p><b>Almost everything I was able to prove came from records someone else created and had to hand over.</b> Not from my account of events. From their own documents, contradicting their own statements.</p><h4>Who is subject to a request</h4><p>In Montana the right to know is in the Constitution itself — Article II, Section 9 — not merely in statute. It reaches <b>public bodies and agencies of state and local government</b>.</p><p>That includes: cities and towns, counties, school districts, fire districts and other special districts, state agencies and departments, public universities, and the boards and committees of all of them.</p><p><b>It does not reach private employers.</b> If your employer is private, this route is closed — but your own personnel file may still be available under a different rule, and discovery in litigation reaches further than a records request ever will.</p><div class="gbox"><div class="gboxh">What people miss</div><p><b>Text messages on personal devices about public business are public records.</b> So are emails sent from a private account about government work. The test is the content, not the device.</p><p><b>Meeting recordings</b> are records. So are draft minutes, calendars, call logs, and the metadata on documents.</p><p><b>Ask for the search terms they used.</b> If a production comes back thin, asking what they searched and which accounts they searched is often more revealing than the production itself.</p></div><h4>How to make the request</h4><p class="gterm"><b>In writing, always</b> &mdash; email is fine. Keep the sent copy. The date you asked is as important as what you asked for.</p><p class="gterm"><b>Be specific about scope</b> &mdash; name the date range, the people whose records you want, and the accounts — official and personal — you believe hold responsive material.</p><p class="gterm"><b>Ask for categories, not conclusions</b> &mdash; “all communications between X and Y between these dates” works. “Anything showing they discriminated” does not.</p><p class="gterm"><b>Ask about fees up front</b> &mdash; Montana allows a charge for the actual cost of fulfilling a request. Ask for an estimate before they begin, and ask whether a waiver is available.</p><p class="gterm"><b>Follow up in writing when it is late</b> &mdash; and keep following up. A paper trail of unanswered requests is itself evidence.</p><p class="gterm"><b>Ask again, differently</b> &mdash; I obtained the two documents most central to my case only after a different body produced them from an account the first search had excluded.</p><h4>If they are a public body, the meeting rules are yours too</h4><p>Montana’s open meeting law is not just about watching. It gives you things you can use, and it is written to be <b>liberally construed in favor of openness</b>.</p><p class="gterm"><b>They cannot act on an item that is not on the published agenda</b> &mdash; § 2-3-103. A decision taken on something the public was never told would be discussed is vulnerable — and a district court can void a decision made in violation of the open meeting law.</p><p class="gterm"><b>You have a right to comment on matters <i>not</i> on the agenda</b> &mdash; the agenda must include an item allowing public comment on any public matter within the agency’s jurisdiction that is not otherwise listed. They do not get to keep your subject off the agenda and thereby keep you quiet.</p><p class="gterm"><b>What you say must go into the minutes</b> &mdash; § 2-3-103 requires public comment received at a meeting to be incorporated into the official minutes. If you speak, there is a permanent record of it — and if the minutes omit or distort what you said, that omission is itself documented.</p><p class="gterm"><b>Minutes must be kept and available</b> &mdash; for every meeting required to be open. Compare them against the recording.</p><div class="gbox green"><div class="gboxh">When they can close a meeting — and when they cannot</div><p><b>Individual privacy.</b> § 2-3-203(3). But <b>the right belongs to the person being discussed</b> — and if that person waives it, the meeting must be open. If they are closing a session to talk about you, you can waive and force it open.</p><p><b>Litigation strategy.</b> § 2-3-203(4). Only where an open meeting would have a detrimental effect on their litigating position — and <b>never</b> where the only parties to the litigation are public agencies.</p><p><b>The possibility of a closed session must appear on the agenda</b> so the public is notified in advance.</p><p><b>And the decision itself must be made in open session.</b> They may discuss strategy behind a closed door. They may not decide behind one.</p></div><p><span>Minutes of a properly closed session are sealed absent a court order — but minutes of that closed portion must still be kept. The absence of them is a fact.</span></p><p class="lawcite"><b>§ 2-3-103 — notice, agenda and public participation</b><br><span>archive.legmt.gov · title 0020, chapter 0030</span></p><p class="lawcite"><b>§ 2-3-203 — meetings to be open, and the exceptions</b><br><span>archive.legmt.gov · title 0020, chapter 0030</span></p><h4>What becomes public afterward</h4><p><b>A settlement paid by a public body is generally a public record.</b> Public money is public. So are the minutes approving it, and in many cases the agreement itself.</p><p>This cuts both ways and you should know it before you sign anything. A confidentiality term cannot un-public a public expenditure, and a term that purports to may not be enforceable against the record itself. Ask explicitly what the body will disclose if someone requests it.</p><p>It also means you can <b>look up what they paid to settle with other people</b>. Prior settlements, verdicts, and the budget lines they came out of are often discoverable before you ever walk into mediation.</p><h4>Your own records</h4><p>Separately from any public records request, <b>ask for your own file.</b> Personnel file, training records, disciplinary records, your application, anything with your name on it.</p><p>Ask in writing. Ask for the <b>complete</b> file, including anything held by a supervisor outside the official file. Ask for it in native format with metadata intact, not printed and rescanned.</p><div class="gbox"><div class="gboxh">Why your own file matters</div><p>My personnel file arrived 39 days late and contained a written warning <b>I had never seen or been told about.</b> It was dated, signed, and filed without my knowledge.</p><p>It also showed what was <i>not</i> there — no record of the training that had been halted, no record of a commitment that had been made to me in writing elsewhere. Absences in a file are evidence too.</p><p><b>Ask early.</b> If you wait until you are in a dispute, a litigation hold may be invoked to delay it.</p></div></div></details><div class="pagefoot"><button class="sec" onclick="printPage('records')">Print this page <span>&#8599;</span></button></div></section><section class="view" id="v-complaint"><h2>The complaint</h2><p class="sub2">The Bureau drafts one from your intake, or you may draft your own. Either way, this assembles it.</p><div class="updnote" role="note"><b>We&rsquo;re updating this page to improve the formatting of the printed charge form and case packet.</b> Everything still works and your saved work is safe. Check back for updates.</div><div class="toolhead" style="margin:4px 0 10px"><h3 style="margin:0 0 4px;font-size:18px;color:var(--navy)">Draft your complaint</h3><p class="note" style="margin:0">Fill in the boxes below, then print it on the Bureau&rsquo;s charge form. The guidance on whether you have a claim, and how to word it, follows.</p></div>
 <div class="card"><h3 style="margin-top:0">You</h3>
  <label class="fl" for="cp-name">Full name</label><input type="text" id="cp-name">
  <label class="fl" for="cp-addr">Mailing address</label><input type="text" id="cp-addr">
@@ -2269,7 +2317,7 @@ function _printComplaintForm(asHtml){
     for(var q=0;q<raw.length;q++){ var t=raw[q].replace(/\s*\n\s*/g,' ').trim();
       if(t) paras.push(t.replace(/^\s*[A-Za-z0-9]{1,2}[.)]\s+/,'')); }
   } else if(D.events.length){
-    paras=D.events.map(function(e){ return 'On '+niceDate(e.d)+', '+e.w+(e.who?' Present: '+e.who+'.':''); });
+    paras=D.events.map(function(e){ return 'On '+niceDate(e.d)+', '+lcFirst(e.w)+(e.who?' Present: '+e.who+'.':''); });
   }
   paras=withClaims(paras);
   var letters=function(n){ var s=''; n++; while(n>0){ var m=(n-1)%26; s=String.fromCharCode(65+m)+s; n=Math.floor((n-1)/26);} return s; };
@@ -2307,8 +2355,8 @@ function _printComplaintForm(asHtml){
    '<table class="hgrid hbasis"><tr>'+
     '<td class="hb1"><div class="hlab">BASIS OF DISCRIMINATION</div><div class="hval">'+basis+'</div></td>'+
     '<td class="hb2"><div class="hlab">DATE OF DISCRIMINATION</div>'+
-      '<div class="hval">Earliest: '+esc(nice(f['cp-first']))+'</div>'+
-      '<div class="hval" style="margin-top:8pt">Latest: '+esc(nice(f['cp-last']))+'</div></td>'+
+      '<div class="hdate">Earliest: '+esc(nice(f['cp-first']))+'</div>'+
+      '<div class="hdate hlatest">Latest: '+esc(nice(f['cp-last']))+'</div></td>'+
    '</tr></table>'+
    '<div class="hbody">'+
    '<div class="hsec">PARTICULARS OF THE CHARGE</div>'+
@@ -2316,13 +2364,13 @@ function _printComplaintForm(asHtml){
      ' in violation of the Montana Human Rights Act (MHRA)'+(gov?', and the Governmental Code of Fair Practices (GCFP),':',')+
      ' for the following reasons:</p>'+
    body+
-   '<div class="hsec hver">VERIFICATION</div>'+
+   '<div class="hverwrap"><div class="hsec hver">VERIFICATION</div>'+
    '<ul class="hvl">'+
     '<li>I hereby file this charge with the above-cited agency.</li>'+
     '<li>I agree to inform the agency if I change my address or telephone number and I agree to cooperate fully in the processing of my charge in accordance with its procedures.</li>'+
     '<li>I swear or affirm that I have read the above charge and I declare under penalty of perjury that the foregoing is true and correct.</li>'+
    '</ul>'+
-   '<div class="hsig"><span>Signature: <span class="hline"></span></span><span>Date: <span class="hline short"></span></span></div>'+
+   '<div class="hsig"><span>Signature: <span class="hline"></span></span><span>Date: <span class="hline short"></span></span></div></div>'+
    '</div><div class="hrev">Revised 8/2020</div>'+
   '</div>';
   if(asHtml) return html;
@@ -2688,13 +2736,22 @@ function renderRequests(){
 }
 function delRequest(i){ if(confirm('Remove from the log?')){ D.requests.splice(i,1); save(); renderRequests(); } }
 function copyOut(id){ var t=$(id); t.select(); try{document.execCommand('copy'); alert('Copied.');}catch(e){ alert('Select the text and copy it.'); } }
+/* "On March 4, 2026, Hired as..." reads wrong: lower-case the first word after the date,
+   unless it is a month, a weekday, "I", or the start of a name ("Dale Pruett said..."). */
+function lcFirst(t){
+  t=String(t||''); var m=/^([A-Z][a-z']*)(\s+)(\S*)/.exec(t); if(!m) return t;
+  var w=m[1], nx=m[3];
+  if(/^(I|January|February|March|April|May|June|July|August|September|October|November|December|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)$/.test(w)) return t;
+  if(/^[A-Z]/.test(nx) && !/ed$/.test(w)) return t;
+  return w.charAt(0).toLowerCase()+t.slice(1);
+}
 /* ---- complaint ---- */
 function buildComplaint(){
   var f={}; ['cp-name','cp-addr','cp-phone','cp-email','cp-resp','cp-respaddr','cp-respphone',
            'cp-area','cp-grounds','cp-first','cp-last','cp-facts','cp-want'].forEach(function(k){ f[k]=$(k).value.trim(); });
   D.complaint=f; save();
   var body=D.events.length&&!f['cp-facts'] ? D.events.map(function(e,i){
-      return String.fromCharCode(65+i)+'. On '+niceDate(e.d)+', '+e.w+(e.who?' Present: '+e.who+'.':''); }).join('\n\n') : f['cp-facts'];
+      return String.fromCharCode(65+i)+'. On '+niceDate(e.d)+', '+lcFirst(e.w)+(e.who?' Present: '+e.who+'.':''); }).join('\n\n') : f['cp-facts'];
   body=withClaimsText(body);
   var t='CHARGE OF DISCRIMINATION\nFiled before: Montana Department of Labor & Industry, Human Rights Bureau\n\n'+
   'CHARGING PARTY\n'+f['cp-name']+'\n'+f['cp-addr']+'\n'+f['cp-phone']+(f['cp-email']?' \u00b7 '+f['cp-email']:'')+'\n\n'+
@@ -3239,7 +3296,7 @@ function ensureIds(){
 function byId(list,id){ for(var i=0;i<list.length;i++) if(list[i].id===id) return list[i]; return null; }
 function idxOf(list,id){ for(var i=0;i<list.length;i++) if(list[i].id===id) return i; return -1; }
 function exNum(id){ return idxOf(D.exhibits,id)+1; }
-function short(t,n){ t=String(t||''); n=n||60; return t.length>n? t.slice(0,n-1).trim()+'\u2026' : t; }
+function short(t,n){ t=String(t||''); n=n||60; return t.length>n? t.slice(0,n-1).replace(/[\s.,;:]+$/,'').replace(/\s+\S*$/,'')+'\u2026' : t; }
 var MONTHS_F=['January','February','March','April','May','June','July','August','September','October','November','December'];
 function niceDate(x){ var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(x||''); return m? MONTHS_F[+m[2]-1]+' '+(+m[3])+', '+m[1] : (x||''); }
 function hrbDue(d){ return window.limCompute? limCompute(limByKey('hrb'),d,{}).due : addDays(d,180); }
@@ -3763,12 +3820,14 @@ function renderPacket(){
 function tbl(head,rows){ return '<table><thead><tr>'+head.map(function(h){return '<th>'+h+'</th>';}).join('')+'</tr></thead><tbody>'+rows+'</tbody></table>'; }
 function buildPacket(){
   var s=pkState(), c=D.complaint||{}, parts=[], toc=[];
-  var sec=function(title,body){ toc.push(title); parts.push('<section class="pksec"><h2>'+(toc.length)+'. '+esc(title)+'</h2>'+body+'</section>'); };
+  var sec=function(title,body,bare){ toc.push(title);
+    parts.push('<section class="pksec pk-'+title.toLowerCase().split(' ')[0]+(bare?' pkbare':'')+'">'+(bare?'':'<h2><span class="pknum">'+toc.length+'.</span> '+esc(title)+'</h2>')+body+'</section>'); };
   if(s.complaint){
     var cf=''; try{ cf=_printComplaintForm(true)||''; }catch(e){ cf=''; }
     if(!cf){ try{ buildComplaint(); }catch(e){} }
     var t=($('cp-out')&&$('cp-out').value)||'';
-    sec('Charge of discrimination', cf? cf : t? '<pre class="pkpre">'+esc(t)+'</pre>' : '<p>No complaint drafted yet.</p>');
+    // the Bureau's form carries its own title, so it gets no packet heading above it
+    sec('Charge of discrimination', cf? cf : t? '<pre class="pkpre">'+esc(t)+'</pre>' : '<p>No complaint drafted yet.</p>', !!cf);
   }
   if(s.chron){
     var rows=D.events.map(function(e,i){ return '<tr><td class="n">'+(i+1)+'</td><td class="dcell">'+esc(niceDate(e.d))+'</td><td><div class="wt">'+esc(e.w)+'</div>'+
@@ -3797,12 +3856,11 @@ function buildPacket(){
   if(!parts.length && !s.cover){ alert('Pick at least one part to include.'); return; }
   var cover='';
   if(s.cover){
+    var row=function(k,v){ return v? '<tr><th>'+k+'</th><td>'+esc(v)+'</td></tr>' : ''; };
     cover='<section class="pkcover"><h1>Case packet</h1>'+
-      (c['cp-name']?'<p class="pkline"><b>Charging party:</b> '+esc(c['cp-name'])+'</p>':'')+
-      (c['cp-resp']?'<p class="pkline"><b>Respondent:</b> '+esc(c['cp-resp'])+'</p>':'')+
-      (c['cp-grounds']?'<p class="pkline"><b>Basis:</b> '+esc(c['cp-grounds'])+'</p>':'')+
-      '<p class="pkline"><b>Prepared:</b> '+pdate()+'</p>'+
-      (toc.length?'<h3>Contents</h3><ol>'+toc.map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+'</ol>':'')+'</section>';
+      '<table class="pkparties">'+row('Charging party',c['cp-name'])+row('Respondent',c['cp-resp'])+row('Basis',c['cp-grounds'])+
+        '<tr><th>Prepared</th><td>'+pdate()+'</td></tr></table>'+
+      (toc.length?'<h3>Contents</h3><ol class="pktoc">'+toc.map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+'</ol>':'')+'</section>';
   }
   $('pk-print').innerHTML='<div class="pvbar noprint"><button class="pri" onclick="reprint(\'pk-print\')">Print again</button>'+
     '<button class="sec" onclick="closePrint(\'pk-print\')">Close</button></div>'+
@@ -4104,6 +4162,7 @@ function buildFurniture(){
     '<div id="dates-list"></div><div class="row" id="dt-all"><button class="pri" onclick="icsAll()">Add all upcoming dates to my calendar</button></div>');
   // case packet view
   addView('packet','Case packet','Everything in one printable file, numbered, with a contents page.',
+    '<div class="updnote" role="note"><b>We&rsquo;re updating this page to improve the formatting of the printed charge form and case packet.</b> Everything still works and your saved work is safe. Check back for updates.</div>'+
     '<div class="card"><h3 style="margin-top:0">What to include</h3><div id="pk-list"></div>'+
     '<div class="row"><button class="pri" onclick="buildPacket()">Build the case packet</button></div></div>'+
     '<div id="pk-print" class="printout" style="display:none"></div>');
